@@ -45,10 +45,9 @@
             var yellowColorBuffer;
             var indexBuffer;
 
-            var totalAngle = 0;
-            var cameraDistance = 20;
-            var requestId = 0;
-
+            
+            var cameraDistance = 25;
+						
             function createGLContext(canvas)
             {
                 var context = null;
@@ -164,35 +163,36 @@
                 gl.bindBuffer(gl.ARRAY_BUFFER, redColorBuffer);
                 // red - legs, tail and ears
                 var redColorVertices = [
-                    0.32, 0.08, 0.09, 1,
-                    0.32, 0.08, 0.09, 1,
-                    0.32, 0.08, 0.09, 1,
-                    0.32, 0.08, 0.09, 1,
+                    0.4, 0.1, 0.12, 1,
+                    0.4, 0.1, 0.12, 1,
+                    0.4, 0.1, 0.12, 1, // Top Side color
+                    0.4, 0.1, 0.12, 1,
 
-                    0.42, 0.11, 0.11, 1,
-                    0.42, 0.11, 0.11, 1,
-                    0.42, 0.11, 0.11, 1,
-                    0.42, 0.11, 0.11, 1,
+                    0.5, 0.5, 0.5, 1,
+                    0.5, 0.5, 0.5, 1,
+                    0.5, 0.5, 0.5, 1, // Bottom side color 
+                    0.5, 0.5, 0.5, 1,
 
-                    0.5, 0.13, 0.13, 1,
-                    0.5, 0.13, 0.13, 1,
-                    0.5, 0.13, 0.13, 1,    // color of sides
-                    0.5, 0.13, 0.13, 1,
+                    0.5, 0.2, 0.25, 1,
+                    0.5, 0.2, 0.25, 1,
+                    0.5, 0.2, 0.25, 1, // left side color
+                    0.5, 0.2, 0.25, 1,
 
-                    0.6, 0.15, 0.16, 1,
-                    0.6, 0.15, 0.16, 1,
-                    0.6, 0.15, 0.16, 1,
-                    0.6, 0.15, 0.16, 1,
+                    0.5, 0.2, 0.25, 1,
+                    0.5, 0.2, 0.25, 1,
+                    0.5, 0.2, 0.25, 1, // // right side color
+                    0.5, 0.2, 0.25, 1,
 
-                    0.66, 0.17, 0.18, 1,
-                    0.66, 0.17, 0.18, 1,
-                    0.66, 0.17, 0.18, 1,
-                    0.66, 0.17, 0.18, 1,
+                    0.7, 0.2, 0.25, 1,
+                    0.7, 0.2, 0.25, 1,
+                    0.7, 0.2, 0.25, 1, // Front side color
+                    0.7, 0.2, 0.25, 1,
 
-                    0.7, 0.18, 0.19, 1,
-                    0.7, 0.18, 0.19, 1,
-                    0.7, 0.18, 0.19, 1,
-                    0.7, 0.18, 0.19, 1];
+                    0.9, 0.20, 0.24, 1,
+                    0.9, 0.20, 0.24, 1,
+                    0.9, 0.20, 0.24, 1, // Back side
+                    0.9, 0.20, 0.24, 1
+									];
 
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(redColorVertices), gl.STATIC_DRAW);
                 redColorBuffer.itemSize = 4;
@@ -202,35 +202,36 @@
                 gl.bindBuffer(gl.ARRAY_BUFFER, yellowColorBuffer);
                 // yellow - body, head and neck
                 var yellowColorVertices = [
-                    0.45, 0.4, 0.2, 1,
-                    0.45, 0.4, 0.2, 1,
-                    0.45, 0.4, 0.2, 1, // Top Side
-                    0.45, 0.4, 0.2, 1,
+                    0.39, 0.34, 0.1, 1,
+                    0.39, 0.34, 0.1, 1,
+                    0.39, 0.34, 0.1, 1, // Top Side color
+                    0.39, 0.34, 0.1, 1,
 
-                    0.6, 0.51, 0.21, 1,
-                    0.6, 0.51, 0.21, 1,
-                    0.6, 0.51, 0.21, 1, // Bottom side
-                    0.6, 0.51, 0.21, 1,
+                    0.7, 0.5, 0.16, 1,
+                    0.7, 0.5, 0.16, 1,
+                    0.7, 0.5, 0.16, 1, // Bottom side color
+                    0.7, 0.5, 0.16, 1,
 
-                    0.8, 0.6, 0.25, 1,
-                    0.8, 0.6, 0.25, 1,
-                    0.8, 0.6, 0.25, 1, // left side
-                    0.8, 0.6, 0.25, 1,
+                    0.8, 0.52, 0.22, 1,
+                    0.8, 0.52, 0.22, 1,
+                    0.8, 0.52, 0.22, 1, // left side color
+                    0.8, 0.52, 0.22, 1,
 
-                    0.8, 0.55, 0.25, 1,
-                    0.8, 0.55, 0.25, 1, // right side
-                    0.8, 0.55, 0.25, 1,   // color of sides
-                    0.8, 0.55, 0.25, 1,
+                    0.7, 0.55, 0.25, 1,
+                    0.7, 0.55, 0.25, 1, // right side color
+                    0.7, 0.55, 0.25, 1,   // color of sides
+                    0.7, 0.55, 0.25, 1,
 
-                    0.99, 0.77, 0.31, 1,
-                    0.99, 0.77, 0.31, 1,
-                    0.99, 0.77, 0.31, 1, // Front side
-                    0.99, 0.77, 0.31, 1,
+                    0.99, 0.65, 0.3, 1,
+                    0.99, 0.65, 0.3, 1,
+                    0.99, 0.65, 0.3, 1, // Front side color
+                    0.99, 0.65, 0.3, 1,
 
-                    1, 0.86, 0.35, 1,
-                    1, 0.86, 0.35, 1,
-                    1, 0.86, 0.35, 1, // Back side
-                    1, 0.86, 0.35, 1];
+                    1, 0.76, 0.35, 1,
+                    1, 0.76, 0.35, 1,
+                    1, 0.76, 0.35, 1, // Back side
+                    1, 0.76, 0.35, 1
+									];
 
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(yellowColorVertices), gl.STATIC_DRAW);
                 yellowColorBuffer.itemSize = 4;
@@ -266,21 +267,18 @@
             {
                 var x, y, z;
  
-                var localAngle = document.getElementById("angleText").value = "65"; // Default camera angle
+                var localAngle = "65"; // Default camera angle
 	
                 var pvMatrix = glMatrix.mat4.create();
                 var viewMatrix = glMatrix.mat4.create();
                 var perspectiveMatrix = glMatrix.mat4.create();
 
-                // check each of the radio buttons categories (topbottom, frontback and lefttight)
                 z = cameraDistance;
 
                 x = cameraDistance;
 
                 y = -cameraDistance;
-                
-
-                
+             
                 totalAngle = (localAngle%360)*Math.PI/180.0;
                 glMatrix.mat4.perspective(perspectiveMatrix, totalAngle, 1, 0.001, cameraDistance*10);
                 
@@ -300,38 +298,44 @@
                 gl.vertexAttribPointer(vertexColorAttributePointer, yellowColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
                 // creating the dog
-                // translation of the cube for each body part
-                var yellowTranslationVertices = [ // yellow parts - translation
-                    -5.5, -4.5,    1,   // back right paw
-                     5.5,  4.5,    1,   // front left paw
-                    -5.5,  4.5,    1,   // back left paw
-                     5.5, -4.5,    1,   // front right paw
-                    -1.0,    0,    7,   // body
-                     4.0,    0,   11,   // neck
-                     6.0,    0, 14.5];  // head
+                // translation of the cube for each body part.
+                var yellowTranslationVertices = [ // yellow parts.  
+								//		y		 	x				z 
+
+                    0,    0,    6 ,   // body.
+                     5.0,    0,   10,   // neck.
+                     7.0,    0, 13.5];  // head.
 
 
-                var redTranslationVertices = [ // red parts - translation
-                    -6.5,  -4.5,   5,   // back right leg
-                     4.5,   4.5,   5,   // front left leg
-                    -6.5,   4.5,   5,   // back left leg
-                     4.5,  -4.5,   5,   // front right leg
-                      -7,     0, 12,   // tail
-                     3.0,  -4.0,  14,   // right ear
-                     3.0,   4.0,  14];  // left ear
+                var redTranslationVertices = [ // red parts.
+								//		y		 		x			z
+								-4.5, -4.5,    0,   // back right paw.
+                     6.5,  4.5,    0,   // front left paw.
+                    -4.5,  4.5,    0,   // back left paw.
+                     6.5, -4.5,    0,   // front right paw.
+                    -5.5,  -4.5,   4,   // back right leg.
+                     5.5,   4.5,   4,   // front left leg.
+                    -5.5,   4.5,   4,   // back left leg.
+                     5.5,  -4.5,   4,   // front right leg.
+                      -6,     0, 11,   // tail.
+                     4.0,  -4.0,  13,   // right ear.
+                     4.0,   4.0,  13];  // left ear.
 
-                // scaling of the cube for each part - divided by 2 since our cube is 2x2x2
-                var yellowScalingVertices = [ // yellow parts - scaling
-                     5/2, 3/2, 2/2, // back right paw
-                     5/2, 3/2, 2/2, // front left paw
-                     5/2, 3/2, 2/2, // back left paw
-                     5/2, 3/2, 2/2, // front right paw
-                    14/2, 6/2, 5/2, // body
-                     4/2, 4/2, 3/2, // neck
-                     8/2, 6/2, 4/2];  // head
+                // scaling of cube for each part, divided by 2 since our cube is 2x2x2.
+                var yellowScalingVertices = [ // yellow parts, scaling.
+								//		y		 x		z
+                    
+                    14/2, 6/2, 5/2, // body.
+                     4/2, 4/2, 3/2, // neck.
+                     8/2, 6/2, 4/2];  // head.
 
 
                 var redScalingVertices = [ // red parts - scaling
+								//		y		 x		z
+										5/2, 3/2, 2/2, // back right paw.
+                    5/2, 3/2, 2/2, // front left paw.
+                    5/2, 3/2, 2/2, // back left paw.
+                    5/2, 3/2, 2/2, // front right paw.
                     3/2, 3/2, 6/2,  // back right leg
                     3/2, 3/2, 6/2,  // front left leg
                     3/2, 3/2, 6/2,  // back left leg
@@ -345,7 +349,7 @@
                 var p;
 
                 // yellow body parts
-                for(p=0; p<=7*3; p+=3)
+                for(p=0; p<=4*3; p+=3)
                 {
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,indexBuffer);
                     glMatrix.mat4.fromTranslation(body_part, [yellowTranslationVertices[p], yellowTranslationVertices[p+1], yellowTranslationVertices[p+2]] );
@@ -362,7 +366,7 @@
                 gl.vertexAttribPointer(vertexColorAttributePointer, redColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
                 // red body parts
-                for(p=0; p<=7*3; p+=3)
+                for(p=0; p<=11*3; p+=3)
                 {
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
                     glMatrix.mat4.fromTranslation(body_part, [redTranslationVertices[p], redTranslationVertices[p+1], redTranslationVertices[p+2]] );
@@ -371,7 +375,7 @@
                     gl.uniformMatrix4fv(transformUniformPointer, false, new Float32Array(body_part));
                     gl.drawElements(gl.TRIANGLES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT, 0);
                     gl.drawElements(gl.TRIANGLES, yellowColorBuffer.numberOfItems, gl.UNSIGNED_SHORT, 0);
-                }
+                }  
             }
 
             function startup()
@@ -402,15 +406,10 @@
     </head>
     <!-- HTML/ CSS Screen Split-->
     <body onload="startup()">
-        <div class="split left">
+        <div class="dog">
             <div class="centered">
                 <canvas id="myGLCanvas" >
                 </canvas>
-            </div>
-            <div class="split right">
-                <p>
-                    Camera Angle: <label for="angleText"></label><input type="text" id="angleText" min="0" value="45">
-                </p>   
             </div>
         </div>
     </body>
