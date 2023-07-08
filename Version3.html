@@ -390,17 +390,25 @@
                 gl.clearColor(0.41, 0.43, 0.42, 1.0);
                 gl.viewport(5, 5, gl.viewportWidth, gl.viewportHeight);
                 gl.enable(gl.DEPTH_TEST);
-                redraw();
+                startAnimation();
             }
 
             function startAnimation() {
                 if (requestID == 0)
-                    requestID = window.requestAnimationFrame(animationStep);
+                    animationStep();
             }
+            
             function animationStep() {
                 redraw();
-	            requestId = window.requestAnimationFrame(animationStep);
-
+                numberOfFrames++;
+                currentTime = Date.now();
+                if (currentTime - previousTime >= 1000)
+                {
+                    document.getElementById("fps").innerHTML = numberOfFrames;
+                    numberOfFrames = 0;
+                    previousTime = currentTime;
+                }
+                requestId = window.requestAnimationFrame(anim);
             }
             function stopAnimation() {
                 window.cancelAnimationFrame(requestId);
@@ -421,11 +429,8 @@
         </div>
         <button id="startButton" onclick="startAnimation()">Redraw scene</button>
         <br />
-        <p>
-        Βήμα γωνίας περιστροφής:<input type="text" id="stepAngleTxt" value="1" autocomplete="off"> 
-        Βήμα ύψους:<input type="text" id="stepZTxt" value="0.01" autocomplete="off">
+        <b>Animaton</b>
         <button id="startButton" onclick="startAnimation()">Start!</button>
         <button id="stopButton" onclick="stopAnimation()">Stop!</button>
-        </p>
     </body>
 </html>
