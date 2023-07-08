@@ -45,7 +45,7 @@
             var yellowColorBuffer;
             var indexBuffer;
 
-            var requestID = 0;
+            
             var cameraDistance = 25;
 						
             function createGLContext(canvas)
@@ -331,8 +331,8 @@
 
 
                 var redScalingVertices = [ // red parts - scaling
-			//		y		 x		z
-					5/2, 3/2, 2/2, // back right paw.
+								//		y		 x		z
+										5/2, 3/2, 2/2, // back right paw.
                     5/2, 3/2, 2/2, // front left paw.
                     5/2, 3/2, 2/2, // back left paw.
                     5/2, 3/2, 2/2, // front right paw.
@@ -378,27 +378,36 @@
                 }  
             }
 
-            function startup(){
+            function startup()
+            {
                 canvas = document.getElementById("myGLCanvas");
-                minDimension = Math.min(window.innerHeight, window.innerWidth);
-                canvas.width = 0.9*minDimension;
-                canvas.height = 0.9*minDimension;
+                const minDimension=Math.min(window.innerWidth,window.innerHeight);
+                canvas.width = 0.8*minDimension;
+                canvas.height = 0.8*minDimension;
                 gl = WebGLDebugUtils.makeDebugContext(createGLContext(canvas));
                 setupShaders();
                 setupBuffers();
 								// Grey background
                 gl.clearColor(0.41, 0.43, 0.42, 1.0);
-                gl.viewport(5, 5, gl.viewportWidth, gl.viewportHeight);
+
                 gl.enable(gl.DEPTH_TEST);
-                startAnimation();
+                gl.viewport(5, 5, gl.viewportWidth, gl.viewportHeight);
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+                redraw();
+									
+
+				gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  				redraw();
             }
 
-            function startAnimation() {
-                if (requestID == 0)
-                    animationStep();
+            function startAnim()
+            {
+                if (!requestId)
+                    anim();
             }
-            
-            function animationStep() {
+
+            function anim()
+            {
                 redraw();
                 numberOfFrames++;
                 currentTime = Date.now();
@@ -410,12 +419,12 @@
                 }
                 requestId = window.requestAnimationFrame(anim);
             }
-            function stopAnimation() {
+
+            function stopAnim()
+            {
                 window.cancelAnimationFrame(requestId);
                 requestId = 0;
             }
-
-         
             
         </script>
     </head>
@@ -426,11 +435,8 @@
                 <canvas id="myGLCanvas" >
                 </canvas>
             </div>
+            <button id="startButton" onclick="startAnimation()">Start!</button>
+            <button id="stopButton" onclick="stopAnimation()">Stop!</button>
         </div>
-        <button id="startButton" onclick="startAnimation()">Redraw scene</button>
-        <br />
-        <b>Animaton</b>
-        <button id="startButton" onclick="startAnimation()">Start!</button>
-        <button id="stopButton" onclick="stopAnimation()">Stop!</button>
     </body>
 </html>
