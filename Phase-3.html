@@ -67,21 +67,9 @@
 
 
             var totalAngle = 0;
-            var cameraDistance = 10;
+            var cameraDistance = 15;
             var requestId = 0;
 
-            var numberOfFrames;
-            var previousTime;
-            var currentTime;
-
-            var mouseDown = false; // flag from when mouse is down
-            var deltaFresh = false;
-            var lastMouseX = null; // last position of the mouse in the canvas
-            var lastMouseY = null;
-            var currMouseX = null; // current position of the mouse in the canvas
-            var currMouseY = null;
-            var deltaMouseX = 0; // current - last mouse position
-            var deltaMouseY = 0;
             var wheelRadiusFactor = 1; // initial value of the factor for rotation
             var rect;
 
@@ -367,25 +355,23 @@
                 bodyTextureBuffer.numberOfItems = 24;
 
                 faceTexture = gl.createTexture();
-                loadImageForTexture("face.jpg", faceTexture);
+                preprocessTextureImage("face.jpg", faceTexture);
 
                 bodyTexture = gl.createTexture();
-                loadImageForTexture("skin.jpeg", bodyTexture);
+                preprocessTextureImage("skin.png", bodyTexture);
 
                 floorTexture = gl.createTexture();
-                loadImageForTexture("floor.jpg", floorTexture);
+                preprocessTextureImage("floor.jpg", floorTexture);
 
                 skyboxTexture = gl.createTexture();
-                loadImageForTexture("sky.jpg", skyboxTexture);
+                preprocessTextureImage("sky.jpg", skyboxTexture);
             }
 
-            function loadImageForTexture(url, textureObject)
+            function preprocessTextureImage(url, textureObject)
             {
-
                 var image = new Image();
 
-                image.onload = function()
-                {
+                image.onload = function(){
                     gl.bindTexture(gl.TEXTURE_2D, textureObject);
                     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
                     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
@@ -398,9 +384,7 @@
 
             function redraw()
             {
-
-                if(requestId && !mouseDown)
-                {
+                if(requestId){
                     var localAngle = parseFloat(document.getElementById("angleText").value);
                     totalAngle = totalAngle + localAngle*Math.PI/180.0;
 
@@ -487,7 +471,7 @@
                 var tmp_body_part = glMatrix.mat4.create();
                 var p;
 
-                for(p=0; p<=11*3; p+=3)
+                for(p=0; p<=13*3; p+=3)
                 {
                     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,indexBuffer);
                     glMatrix.mat4.fromTranslation(body_part, [bodyTranslationVertices[p], bodyTranslationVertices[p+1], bodyTranslationVertices[p+2]] );
@@ -512,7 +496,7 @@
                 gl.drawElements(gl.TRIANGLES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT, 0);
 
                 // SKY
-                gl.activeTexture(gl.TEXTURE2);
+                gl.activeTexture(gl.TEXTURE0);
                 gl.bindTexture(gl.TEXTURE_2D, skyboxTexture);
                 gl.uniform1i(samplerUniformPointer, 2);
                 gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
@@ -556,7 +540,7 @@
                 gl = WebGLDebugUtils.makeDebugContext(createGLContext(canvas));
                 setupShaders();
                 setupBuffers();
-                gl.clearColor(0.176, 0.213, 0.360, 1.0);
+                gl.clearColor(0.41, 0.43, 0.42, 1.0);
 
                 gl.enable(gl.DEPTH_TEST);
 
