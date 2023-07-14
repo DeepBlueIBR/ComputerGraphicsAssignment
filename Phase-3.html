@@ -426,28 +426,29 @@
 
                 var perspectiveMatrix = glMatrix.mat4.create();
                 glMatrix.mat4.lookAt(viewMatrix,[cameraDistance*c*wheelRadiusFactor, cameraDistance*s*wheelRadiusFactor, cameraDistance], [0, 0, 0], [0, 0, 1]);
-                glMatrix.mat4.perspective(perspectiveMatrix, cameraAngle, 1, 0.01, 10000); // camera perspective
+                glMatrix.mat4.perspective(perspectiveMatrix, cameraAngle, 1, 0.01, 20000); // perspective
                 glMatrix.mat4.multiply(pvMatrix, perspectiveMatrix, viewMatrix);
                 gl.uniformMatrix4fv(perspectiveViewUniformPointer, false, new Float32Array(pvMatrix));
 
                 // translation of body parts
                 var bodyTranslationVertices = [ // body - translation
-                    -5.5, -4.5,    1,   // back right paw
-                     5.5,  4.5,    1,   // front left paw
-                    -5.5,  4.5,    1,   // back left paw
-                     5.5, -4.5,    1,   // front right paw
-                    -1.0,    0,    7,   // body
-                     4.0,    0,   11,   // neck
-                    -6.5,  -4.5,   5,   // back right leg
-                     4.5,   4.5,   5,   // front left leg
-                    -6.5,   4.5,   5,   // back left leg
-                     4.5,  -4.5,   5,   // front right leg
-                      -9,     0, 9.5,   // tail
-                     3.0,  -4.0,  14,   // right ear
-                     3.0,   4.0,  14];  // left ear
+                //		y		 		x			z
+                    -4.5, -4.5,    0,   // back right paw
+                     6.5,  4.5,    0,   // front left paw
+                    -4.5,  4.5,    0,   // back left paw
+                    6.5, -4.5,    0,   // front right paw
+                    0,    0,    6,   // body
+                    5.0,    0,   10,   // neck
+                    -5.5,  -4.5,   4,   // back right leg
+                     5.5,   4.5,   4,   // front left leg
+                    -5.5,   4.5,   4,   // back left leg
+                     5.5,  -4.5,   4,   // front right leg
+                    -6,     0, 11,   // tail
+                    4.0,  -4.0,  13,   // right ear
+                    4.0,   4.0,  13];  // left ear
 
                 var faceTranslationVertices = [ // head - translation
-                    6.0, 0, 14.5];    // head
+                    7.0, 0, 13.5];    // head
 
 
                 var bodyScalingVertices = [ // body - scaling
